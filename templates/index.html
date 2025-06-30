@@ -3,22 +3,67 @@
 {% block title %}Welcome to Hiddekel Investments - Zimbabwe Land Development{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero-section bg-primary text-white py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
-    <div class="container">
-        <div class="row align-items-center min-vh-50">
-            <div class="col-lg-6" data-aos="fade-right">
-                <h1 class="display-4 fw-bold mb-4">Prime Land Development in Zimbabwe</h1>
-                <p class="lead mb-4">Discover exceptional residential and commercial properties with Hiddekel Investments. Your trusted partner in Zimbabwe's land development sector.</p>
-                <div class="d-flex gap-3">
-                    <a href="{{ url_for('main.stands') }}" class="btn btn-light btn-lg">View Properties</a>
-                    <a href="{{ url_for('main.contact') }}" class="btn btn-outline-light btn-lg">Contact Us</a>
+<!-- Cinematic Hero Section -->
+<section class="hero-cinematic position-relative overflow-hidden" style="height: 100vh;">
+    <!-- Animated Background -->
+    <div class="hero-bg position-absolute w-100 h-100" style="
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.9) 0%, rgba(248, 216, 113, 0.8) 50%, rgba(184, 134, 11, 0.9) 100%),
+        radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(247, 233, 142, 0.3) 0%, transparent 50%);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease-in-out infinite;
+    "></div>
+    
+    <!-- Floating Gold Particles -->
+    <div class="position-absolute w-100 h-100" style="pointer-events: none;">
+        <div class="floating-particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-particle" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+        <div class="floating-particle" style="top: 80%; left: 20%; animation-delay: 4s;"></div>
+        <div class="floating-particle" style="top: 30%; left: 70%; animation-delay: 1s;"></div>
+        <div class="floating-particle" style="top: 70%; left: 40%; animation-delay: 3s;"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="container h-100 position-relative" style="z-index: 2;">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <!-- Main Title with Cinematic Animation -->
+                <h1 class="hero-title luxury-text display-1 fw-bold mb-4" 
+                    data-aos="fade-up" 
+                    data-aos-duration="1500"
+                    style="font-size: clamp(3rem, 8vw, 6rem); text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                    HIDDEKEL<br>
+                    <span class="shimmer">INVESTMENTS</span>
+                </h1>
+                
+                <!-- Animated Tagline -->
+                <p class="hero-tagline h2 fw-light mb-5" 
+                   data-aos="fade-up" 
+                   data-aos-delay="500"
+                   style="color: var(--deep-charcoal); font-family: var(--font-luxury); opacity: 0.9;">
+                    "We are the land developers of choice."
+                </p>
+                
+                <!-- Premium CTA Buttons -->
+                <div class="hero-cta d-flex flex-column flex-md-row justify-content-center gap-4 mb-5" 
+                     data-aos="fade-up" 
+                     data-aos-delay="1000">
+                    <a href="{{ url_for('main.stands') }}" class="btn btn-primary btn-lg px-5 py-3 shimmer">
+                        <i class="fas fa-map-marked-alt me-2"></i>
+                        Explore Properties
+                    </a>
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-outline-primary btn-lg px-5 py-3">
+                        <i class="fas fa-calendar-alt me-2"></i>
+                        Book a Tour
+                    </a>
                 </div>
-            </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="text-center">
-                    <i class="fas fa-city display-1 mb-3"></i>
-                    <h3>Building Zimbabwe's Future</h3>
+                
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator" data-aos="fade-in" data-aos-delay="2000">
+                    <div class="scroll-text">Discover More</div>
+                    <div class="scroll-arrow">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,23 +236,202 @@
 
 {% block extra_css %}
 <style>
-    .min-vh-50 {
-        min-height: 50vh;
+    /* Cinematic Hero Animations */
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
     }
     
-    .hero-section {
+    @keyframes floatParticle {
+        0%, 100% { 
+            transform: translateY(0px) rotate(0deg); 
+            opacity: 0.3; 
+        }
+        33% { 
+            transform: translateY(-30px) rotate(120deg); 
+            opacity: 0.8; 
+        }
+        66% { 
+            transform: translateY(-10px) rotate(240deg); 
+            opacity: 0.5; 
+        }
+    }
+    
+    .floating-particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: var(--gold-gradient);
+        border-radius: 50%;
+        animation: floatParticle 6s ease-in-out infinite;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        color: var(--deep-charcoal);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .scroll-indicator:hover {
+        transform: translateX(-50%) translateY(-5px);
+        color: var(--primary-gold);
+    }
+    
+    .scroll-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-family: var(--font-primary);
+    }
+    
+    .scroll-arrow {
+        animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+    
+    /* Luxury Property Cards */
+    .property-card {
         position: relative;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: 1px solid var(--glass-border);
     }
     
-    .hero-section::before {
+    .property-card::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
+        height: 3px;
+        background: var(--gold-gradient);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .property-card:hover {
+        transform: translateY(-20px) scale(1.05);
+        box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+    }
+    
+    .property-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .property-image {
+        position: relative;
+        overflow: hidden;
+        height: 280px;
+    }
+    
+    .property-image img {
+        transition: transform 0.5s ease;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .property-card:hover .property-image img {
+        transform: scale(1.1);
+    }
+    
+    .property-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
         bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        opacity: 0.1;
+        background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .property-card:hover .property-overlay {
+        opacity: 1;
+    }
+    
+    /* Testimonial Bubbles */
+    .testimonial-bubble {
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border-radius: 30px;
+        position: relative;
+        padding: 2rem;
+        margin: 1rem;
+        border: 1px solid var(--glass-border);
+        transition: all 0.4s ease;
+    }
+    
+    .testimonial-bubble::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 20px;
+        background: var(--primary-gold);
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    
+    .testimonial-bubble:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-gold);
+    }
+    
+    /* Stats Counter Animation */
+    .stats-counter {
+        font-family: var(--font-luxury);
+        font-size: 3rem;
+        font-weight: 800;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Section Dividers */
+    .section-divider {
+        height: 2px;
+        background: var(--gold-gradient);
+        width: 100px;
+        margin: 0 auto 3rem auto;
+        border-radius: 2px;
+    }
+    
+    /* Parallax Elements */
+    .parallax-section {
+        position: relative;
+        overflow: hidden;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .parallax-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(212, 175, 55, 0.1);
+        backdrop-filter: blur(2px);
     }
 </style>
 {% endblock %}

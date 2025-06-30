@@ -1,0 +1,113 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Messages - Admin{% endblock %}
+
+{% block page_title %}Contact Messages{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Contact Messages</h2>
+    <div>
+        <span class="badge bg-warning me-2">{{ unread_count }} Unread</span>
+        <span class="badge bg-info">{{ total_count }} Total</span>
+    </div>
+</div>
+
+{% if contacts %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr class="{{ 'fw-bold' if not contact.is_read }}">
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.subject or 'No subject' }}</td>
+                        <td>{{ contact.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            {% if contact.is_read %}
+                                <span class="badge bg-success">Read</span>
+                            {% else %}
+                                <span class="badge bg-warning">Unread</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not contact.is_read %}
+                                <a href="{{ url_for('admin.mark_contact_read', id=contact.id) }}" 
+                                   class="btn btn-sm btn-outline-success me-1">
+                                    <i class="fas fa-check"></i> Mark Read
+                                </a>
+                            {% endif %}
+                            <button type="button" class="btn btn-sm btn-outline-primary" 
+                                    data-bs-toggle="modal" data-bs-target="#messageModal{{ contact.id }}">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Message Modals -->
+{% for contact in contacts %}
+<div class="modal fade" id="messageModal{{ contact.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message from {{ contact.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <strong>From:</strong> {{ contact.name }} ({{ contact.email }})
+                </div>
+                {% if contact.phone %}
+                <div class="mb-3">
+                    <strong>Phone:</strong> {{ contact.phone }}
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                    <strong>Subject:</strong> {{ contact.subject or 'No subject' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Date:</strong> {{ contact.created_at.strftime('%Y-%m-%d %H:%M') }}
+                </div>
+                <div class="mb-3">
+                    <strong>Message:</strong>
+                    <div class="border p-3 mt-2">{{ contact.message }}</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="mailto:{{ contact.email }}?subject=Re: {{ contact.subject or 'Your inquiry' }}" 
+                   class="btn btn-primary">Reply via Email</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+<div class="card">
+    <div class="card-body text-center py-5">
+        <i class="fas fa-envelope fa-3x text-muted mb-3"></i>
+        <h4>No Messages Yet</h4>
+        <p class="text-muted">Contact messages will appear here.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
