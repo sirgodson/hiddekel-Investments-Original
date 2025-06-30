@@ -1,0 +1,92 @@
+🛠️ Ultimate Real Estate Website Prompt — Exceeding Apple-Level Design (For Hiddekel Investments)
+🚀 Create the most beautiful, immersive, and powerful real estate & land development website in the world for Hiddekel Investments using only:
+•	✅ HTML5, CSS3 (with Glassmorphism, ScrollMagic, Parallax), Bootstrap 5+
+•	✅ JavaScript (for scroll animations, sliders, interactivity)
+•	✅ PHP (core, no Laravel) + MySQL (PDO-secured)
+•	✅ Lottie Lite / SVG animations
+•	✅ FontAwesome, Google Fonts (e.g., Poppins, Lora)
+•	✅ Ultra-optimized for mobile & desktop
+________________________________________
+🏢 HIDDEKEL INVESTMENTS
+Tagline: “We are the land developers of choice.”
+📍 Suite 13, Merchant House, Harare
+📞 +263 716 236 518 | 📧 info@hiddekel.org
+🌐 www.hiddekel.org
+________________________________________
+🧠 WEBSITE VISION — “Apple-Class? We’re Going Beyond.”
+Design Goals:
+•	More immersive than Apple.
+•	Cinematic real estate experience.
+•	Luxury branding + emotion-driven layouts.
+•	Visually stunning UI with 3D visuals, motion, elegance.
+•	Use modern design trends: glassmorphism, soft shadows, blurred backgrounds, full-width hero visuals, immersive video/text reveals.
+________________________________________
+🌐 PUBLIC SITE PAGES (Upgraded UI & UX)
+1. Home Page
+•	Cinematic video/image background with motion headline and interactive CTA
+•	Parallax scroll sections (as user scrolls, layers move independently)
+•	Featured Stands Slider (Lottie-powered hover animations)
+•	Call-to-action strip: "Book a Tour", "Get a Free PDF", etc.
+•	Testimonials slider (floating bubbles, portrait fades)
+•	Floating brochure download widget (corner of screen)
+2. About Page
+•	Animated timeline of the company
+•	Dynamic team member cards with hover flip (image + quote)
+•	Company core values reveal on scroll
+3. Stands Listing
+•	Interactive map integration (color-coded for availability)
+•	3D card-style grid with filters (Live Search + Smart Filter UI)
+•	Stand Detail Page:
+o	Tabbed interface: Details | Gallery | Nearby | Availability
+o	Gallery with zoomable lightbox and swipe support
+4. Land Projects
+•	Show phases using a dynamic roadmap
+•	Progress tracker for each development project
+5. Virtual Tours Page
+•	Embedded video tours or Matterport support
+•	Hover-to-preview or scroll-to-reveal interactive 3D thumbnails
+6. Gallery
+•	Filterable by category (e.g., “Before”, “After”, “Launch Events”)
+•	Responsive masonry grid with scroll reveal
+•	Lightbox with optional captions and side panel info
+7. Blog / News
+•	Card layout with scroll fade-in animations
+•	Social share buttons (custom icons, on-hover animation)
+•	Tag-based filtering (Live AJAX)
+8. Contact Page
+•	Smart contact form (autosave & validate)
+•	Integrated Google Maps + Floating WhatsApp Button
+•	Animated success message & admin email integration
+________________________________________
+🛡️ ADMIN DASHBOARD (Full Power Control)
+All previous features (as in your current prompt) + these upgrades:
+•	Drag-and-drop gallery image reorder
+•	Real-time preview before publishing stands or blog posts
+•	Quick-stat widgets with real-time chartJS dashboard
+•	Stand & Gallery Bulk Upload Tool (with auto-thumbnail generator)
+________________________________________
+🌈 STYLE & EXPERIENCE (Beyond Apple)
+Feature	Details
+Design Feel	Minimalist + Premium + Cinematic + Immersive
+Animation	Lottie, ScrollMagic, AOS (Animate On Scroll), CSS keyframes
+Effects	Glassmorphism, Soft-glow cards, Parallax images, Background blur
+Theme Support	Light & Dark Mode (with memory via cookie/localStorage)
+Fonts	Poppins for modern sections, Lora or Playfair for elegance
+User Flow	Emotionally engaging, each scroll step should feel like a luxury tour
+________________________________________
+🧪 DUMMY DATA INCLUDED
+✅ 10+ Featured Stands + dummy pictures
+✅ 6 Luxury Land Projects + dummy pictures
+✅ 5 Gallery Albums + dummy pictures
+✅ 6 Blog Articles + dummy picture
+✅ Admin
+✅ Embedded Lottie animations
+________________________________________
+🔐 SECURITY & PERFORMANCE
+•	✅ PDO Prepared Statements
+•	✅ CSRF token on all admin forms
+•	✅ password_hash() and password_verify() login system
+•	✅ Image size validator + file sanitizer
+•	✅ Smart cache + lazy loading (for images, maps)
+
+I should be able to upload and manage everything from the admin dashboard, such as the logo of the company, social media links, ets

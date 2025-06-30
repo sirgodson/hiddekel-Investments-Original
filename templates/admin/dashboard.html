@@ -1,0 +1,188 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin Dashboard - Hiddekel Investments{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">{{ stats.total_stands }}</h5>
+                        <p class="card-text">Total Properties</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-map fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">{{ stats.available_stands }}</h5>
+                        <p class="card-text">Available</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">{{ stats.total_blog_posts }}</h5>
+                        <p class="card-text">Blog Posts</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-newspaper fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">{{ stats.unread_contacts }}</h5>
+                        <p class="card-text">New Messages</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('admin.add_stand') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-plus me-2"></i>Add Property
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('admin.add_blog') }}" class="btn btn-success w-100">
+                            <i class="fas fa-plus me-2"></i>New Blog Post
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('admin.upload_gallery') }}" class="btn btn-info w-100">
+                            <i class="fas fa-upload me-2"></i>Upload Images
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('admin.settings') }}" class="btn btn-secondary w-100">
+                            <i class="fas fa-cog me-2"></i>Site Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Recent Properties</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_stands %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Price</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stand in recent_stands %}
+                                <tr>
+                                    <td>{{ stand.title }}</td>
+                                    <td>{{ stand.location or '-' }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ 'success' if stand.status == 'Available' else 'danger' if stand.status == 'Sold' else 'warning' }}">
+                                            {{ stand.status }}
+                                        </span>
+                                    </td>
+                                    <td>${{ "%.2f"|format(stand.price) if stand.price else '-' }}</td>
+                                    <td>{{ stand.created_at.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        <a href="{{ url_for('admin.edit_stand', id=stand.id) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No properties yet. <a href="{{ url_for('admin.add_stand') }}">Add your first property</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Recent Messages</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_contacts %}
+                    {% for contact in recent_contacts %}
+                    <div class="mb-3 {% if not loop.last %}border-bottom pb-3{% endif %}">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-1">{{ contact.name }}</h6>
+                            <small class="text-muted">{{ contact.created_at.strftime('%m/%d') }}</small>
+                        </div>
+                        <p class="mb-1 text-muted">{{ contact.subject or 'No subject' }}</p>
+                        <small>{{ contact.message[:50] }}{% if contact.message|length > 50 %}...{% endif %}</small>
+                        {% if not contact.is_read %}
+                            <span class="badge bg-warning ms-2">New</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <a href="{{ url_for('admin.contacts') }}" class="btn btn-sm btn-outline-primary w-100">View All Messages</a>
+                {% else %}
+                    <p class="text-muted">No messages yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
