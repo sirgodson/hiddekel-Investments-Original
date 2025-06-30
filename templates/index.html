@@ -5,15 +5,12 @@
 {% block content %}
 <!-- Cinematic Hero Section -->
 <section class="hero-cinematic position-relative overflow-hidden" style="height: 100vh;">
-    <!-- Animated Background with Image -->
+    <!-- Animated Background -->
     <div class="hero-bg position-absolute w-100 h-100" style="
-        background: linear-gradient(135deg, rgba(212, 175, 55, 0.7) 0%, rgba(248, 216, 113, 0.6) 50%, rgba(184, 134, 11, 0.7) 100%),
-        radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(247, 233, 142, 0.2) 0%, transparent 50%),
-        url('{{ url_for("main.uploaded_file", filename="hero_luxury_estate.jpg") }}');
-        background-size: 400% 400%, 400% 400%, 400% 400%, cover;
-        background-position: center, center, center, center;
-        background-attachment: fixed;
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.9) 0%, rgba(248, 216, 113, 0.8) 50%, rgba(184, 134, 11, 0.9) 100%),
+        radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(247, 233, 142, 0.3) 0%, transparent 50%);
+        background-size: 400% 400%;
         animation: gradientShift 8s ease-in-out infinite;
     "></div>
     
@@ -74,8 +71,8 @@
 </section>
 
 <!-- Luxury Features Section -->
-<section class="features-luxury py-5 position-relative" style="background: linear-gradient(rgba(248, 245, 240, 0.95), rgba(212, 175, 55, 0.1)), url('{{ url_for('main.uploaded_file', filename='property_avondale_commercial.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="container position-relative" style="z-index: 2;">
+<section class="features-luxury py-5" style="background: linear-gradient(135deg, var(--cream) 0%, rgba(212, 175, 55, 0.05) 100%);">
+    <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="display-4 luxury-text mb-4">Excellence in Every Detail</h2>
@@ -132,8 +129,8 @@
 
 <!-- Featured Properties Section -->
 {% if featured_stands %}
-<section class="featured-properties py-5 position-relative" style="background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)), url('{{ url_for('main.uploaded_file', filename='property_borrowdale_luxury.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="container position-relative" style="z-index: 2;">
+<section class="featured-properties py-5" style="background: var(--soft-white);">
+    <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="display-4 luxury-text mb-4">Exceptional Properties</h2>
@@ -249,8 +246,8 @@
 
 <!-- Market Insights Blog Section -->
 {% if recent_posts %}
-<section class="blog-insights py-5 position-relative" style="background: linear-gradient(rgba(248, 245, 240, 0.95), rgba(212, 175, 55, 0.05)), url('{{ url_for('main.uploaded_file', filename='property_glen_lorne_executive.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="container position-relative" style="z-index: 2;">
+<section class="blog-insights py-5" style="background: linear-gradient(135deg, var(--cream) 0%, rgba(212, 175, 55, 0.03) 100%);">
+    <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="display-4 luxury-text mb-4">Market Insights</h2>
@@ -332,68 +329,25 @@
     </div>
 </section>
 
-<!-- Luxury About Section with Background -->
-<section class="about-luxury py-5 position-relative" style="background: linear-gradient(rgba(45, 45, 45, 0.8), rgba(101, 67, 33, 0.7)), url('{{ url_for('main.uploaded_file', filename='property_borrowdale_luxury.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="container position-relative" style="z-index: 2;">
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4" data-aos="fade-right">
-                <div class="glass-panel p-5">
-                    <h2 class="display-4 luxury-text mb-4" style="color: var(--soft-white);">Legacy of Excellence</h2>
-                    <p class="lead mb-4" style="color: var(--soft-white); opacity: 0.9; line-height: 1.8;">
-                        For over a decade, Hiddekel Investments has been Zimbabwe's premier land development company, 
-                        transforming visions into exceptional communities that stand the test of time.
-                    </p>
-                    <div class="luxury-features">
-                        <div class="feature-item d-flex align-items-center mb-3">
-                            <div class="feature-icon-small me-3">
-                                <i class="fas fa-crown"></i>
-                            </div>
-                            <span style="color: var(--soft-white);">Exclusive prime location curation</span>
-                        </div>
-                        <div class="feature-item d-flex align-items-center mb-3">
-                            <div class="feature-icon-small me-3">
-                                <i class="fas fa-gem"></i>
-                            </div>
-                            <span style="color: var(--soft-white);">Uncompromising development standards</span>
-                        </div>
-                        <div class="feature-item d-flex align-items-center mb-3">
-                            <div class="feature-icon-small me-3">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <span style="color: var(--soft-white);">Personalized investment guidance</span>
-                        </div>
-                        <div class="feature-item d-flex align-items-center mb-4">
-                            <div class="feature-icon-small me-3">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <span style="color: var(--soft-white);">Proven track record of success</span>
-                        </div>
-                    </div>
-                    <a href="{{ url_for('main.about') }}" class="btn btn-primary btn-lg px-4 shimmer">
-                        Discover Our Story
-                    </a>
-                </div>
+                <h2 class="display-5 fw-bold text-primary">About Hiddekel Investments</h2>
+                <p class="lead">With years of experience in Zimbabwe's property market, we are committed to delivering exceptional land development projects that transform communities and create lasting value.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Premium location selection</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Professional development standards</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Comprehensive support services</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Flexible payment options</li>
+                </ul>
+                <a href="{{ url_for('main.about') }}" class="btn btn-primary">Learn More</a>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                <div class="luxury-stats-card">
-                    <div class="stats-grid">
-                        <div class="stat-item text-center">
-                            <div class="stat-number">15+</div>
-                            <div class="stat-label">Years of Excellence</div>
-                        </div>
-                        <div class="stat-item text-center">
-                            <div class="stat-number">150+</div>
-                            <div class="stat-label">Properties Developed</div>
-                        </div>
-                        <div class="stat-item text-center">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">Client Satisfaction</div>
-                        </div>
-                        <div class="stat-item text-center">
-                            <div class="stat-number">$50M+</div>
-                            <div class="stat-label">Total Investment</div>
-                        </div>
-                    </div>
+                <div class="text-center">
+                    <i class="fas fa-handshake display-1 text-primary mb-3"></i>
+                    <h4>Your Trusted Partner</h4>
                 </div>
             </div>
         </div>

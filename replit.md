@@ -77,7 +77,11 @@ The application is configured for flexible deployment:
 
 ## Changelog
 
-- June 30, 2025. Initial setup
+- June 30, 2025: Initial setup and ultra-premium design implementation
+- June 30, 2025: Added luxury features, glassmorphism effects, animated gold particles
+- June 30, 2025: Implemented comprehensive admin dashboard with all missing templates
+- June 30, 2025: Added real property images and blog thumbnails
+- June 30, 2025: Background images added to landing page, then rolled back per user request
 
 ## User Preferences
 
