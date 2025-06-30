@@ -70,49 +70,264 @@
     </div>
 </section>
 
-<!-- Featured Properties -->
-{% if featured_stands %}
-<section class="py-5">
+<!-- Luxury Features Section -->
+<section class="features-luxury py-5" style="background: linear-gradient(135deg, var(--cream) 0%, rgba(212, 175, 55, 0.05) 100%);">
     <div class="container">
-        <div class="row">
-            <div class="col-12 text-center mb-5" data-aos="fade-up">
-                <h2 class="display-5 fw-bold text-primary">Featured Properties</h2>
-                <p class="lead text-muted">Discover our premium land development projects</p>
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="section-divider"></div>
+            <h2 class="display-4 luxury-text mb-4">Excellence in Every Detail</h2>
+            <p class="lead" style="color: var(--warm-gray); max-width: 600px; margin: 0 auto;">
+                Discover why discerning investors choose Hiddekel Investments for their most important real estate decisions.
+            </p>
+        </div>
+        
+        <div class="row g-5">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-luxury text-center">
+                    <div class="feature-icon-luxury mb-4 floating">
+                        <div class="icon-container">
+                            <i class="fas fa-crown fa-2x"></i>
+                        </div>
+                    </div>
+                    <h4 class="luxury-text mb-3">Prime Locations</h4>
+                    <p style="color: var(--warm-gray); line-height: 1.8;">
+                        Carefully curated properties in Zimbabwe's most prestigious areas, selected for their exceptional growth potential and enduring value.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-luxury text-center">
+                    <div class="feature-icon-luxury mb-4 floating" style="animation-delay: 1s;">
+                        <div class="icon-container">
+                            <i class="fas fa-gem fa-2x"></i>
+                        </div>
+                    </div>
+                    <h4 class="luxury-text mb-3">Bespoke Service</h4>
+                    <p style="color: var(--warm-gray); line-height: 1.8;">
+                        Personalized attention and expert guidance throughout your investment journey, ensuring every detail exceeds expectations.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-luxury text-center">
+                    <div class="feature-icon-luxury mb-4 floating" style="animation-delay: 2s;">
+                        <div class="icon-container">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                    </div>
+                    <h4 class="luxury-text mb-3">Proven Performance</h4>
+                    <p style="color: var(--warm-gray); line-height: 1.8;">
+                        A distinguished track record of successful developments and satisfied investors, built over years of market leadership.
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            {% for stand in featured_stands %}
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
-                <div class="card h-100">
-                    {% if stand.images %}
-                        <img src="{{ url_for('main.uploaded_file', filename=stand.images[0].filename) }}" 
-                             class="card-img-top" alt="{{ stand.title }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <i class="fas fa-image fa-3x text-muted"></i>
-                        </div>
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ stand.title }}</h5>
-                        <p class="card-text">{{ stand.description[:100] }}...</p>
-                        {% if stand.price %}
-                            <p class="h5 text-primary">${{ "%.2f"|format(stand.price) }}</p>
+    </div>
+</section>
+
+<!-- Featured Properties Section -->
+{% if featured_stands %}
+<section class="featured-properties py-5" style="background: var(--soft-white);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="section-divider"></div>
+            <h2 class="display-4 luxury-text mb-4">Exceptional Properties</h2>
+            <p class="lead" style="color: var(--warm-gray); max-width: 700px; margin: 0 auto;">
+                Explore our carefully selected portfolio of premium properties, each offering unique investment opportunities in Zimbabwe's most desirable locations.
+            </p>
+        </div>
+        
+        <div class="row g-4">
+            {% for stand in featured_stands[:3] %}
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="property-card h-100">
+                    <div class="property-image">
+                        {% if stand.images and stand.images[0] %}
+                            <img src="{{ url_for('main.uploaded_file', filename=stand.images[0].filename) }}" 
+                                 alt="{{ stand.title }}" class="w-100">
+                        {% else %}
+                            <!-- Use real property images from uploads folder -->
+                            {% set property_images = ['property_borrowdale_luxury.jpg', 'property_avondale_commercial.jpg', 'property_glen_lorne_executive.jpg'] %}
+                            <img src="{{ url_for('main.uploaded_file', filename=property_images[loop.index0 % 3]) }}" 
+                                 alt="{{ stand.title }}" class="w-100">
                         {% endif %}
+                        <div class="property-overlay"></div>
+                        {% if stand.status == 'Available' %}
+                            <div class="property-status available">Available</div>
+                        {% elif stand.status == 'Reserved' %}
+                            <div class="property-status reserved">Reserved</div>
+                        {% else %}
+                            <div class="property-status sold">Sold</div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="luxury-text mb-3">{{ stand.title }}</h5>
+                        <p class="text-muted mb-3" style="line-height: 1.6;">{{ stand.description[:120] }}...</p>
+                        <div class="property-details mb-3">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="detail-item">
+                                        <i class="fas fa-map-marker-alt text-primary mb-1"></i>
+                                        <div class="detail-label">Location</div>
+                                        <div class="detail-value">{{ stand.location }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="detail-item">
+                                        <i class="fas fa-expand-arrows-alt text-primary mb-1"></i>
+                                        <div class="detail-label">Size</div>
+                                        <div class="detail-value">{{ stand.size }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-success">{{ stand.status }}</span>
-                            <a href="{{ url_for('main.stand_detail', id=stand.id) }}" class="btn btn-primary">View Details</a>
+                            <div class="property-price luxury-text h5 mb-0">
+                                ${{ "{:,.0f}".format(stand.price) if stand.price else 'Contact for Price' }}
+                            </div>
+                            <a href="{{ url_for('main.stand_detail', id=stand.id) }}" 
+                               class="btn btn-outline-primary btn-sm">View Details</a>
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <div class="text-center mt-4">
-            <a href="{{ url_for('main.stands') }}" class="btn btn-outline-primary btn-lg">View All Properties</a>
+        
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{{ url_for('main.stands') }}" class="btn btn-primary btn-lg px-5 shimmer">
+                View All Properties
+            </a>
         </div>
     </div>
 </section>
 {% endif %}
+
+<!-- Market Statistics Section -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-4 mb-4" style="color: var(--soft-white);">Market Leadership</h2>
+            <p class="lead" style="color: var(--soft-white); opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                Our track record speaks for itself. These numbers represent our commitment to excellence and client satisfaction.
+            </p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="stats-item">
+                    <div class="stats-number">150+</div>
+                    <div class="stats-label">Properties Developed</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="stats-item">
+                    <div class="stats-number">98%</div>
+                    <div class="stats-label">Client Satisfaction</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="stats-item">
+                    <div class="stats-number">15+</div>
+                    <div class="stats-label">Years Experience</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="stats-item">
+                    <div class="stats-number">$50M+</div>
+                    <div class="stats-label">Properties Sold</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Market Insights Blog Section -->
+{% if recent_posts %}
+<section class="blog-insights py-5" style="background: linear-gradient(135deg, var(--cream) 0%, rgba(212, 175, 55, 0.03) 100%);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="section-divider"></div>
+            <h2 class="display-4 luxury-text mb-4">Market Insights</h2>
+            <p class="lead" style="color: var(--warm-gray); max-width: 700px; margin: 0 auto;">
+                Stay informed with our expert analysis and insights into Zimbabwe's evolving real estate landscape.
+            </p>
+        </div>
+        
+        <div class="row g-4">
+            {% for post in recent_posts[:3] %}
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="blog-card h-100">
+                    <div class="blog-image">
+                        {% if post.featured_image %}
+                            <img src="{{ url_for('main.uploaded_file', filename=post.featured_image) }}" alt="{{ post.title }}">
+                        {% else %}
+                            <!-- Use real blog images from uploads folder -->
+                            {% set blog_images = ['blog_market_analysis.jpg', 'blog_luxury_living.jpg', 'blog_market_analysis.jpg'] %}
+                            <img src="{{ url_for('main.uploaded_file', filename=blog_images[loop.index0 % 2]) }}" alt="{{ post.title }}">
+                        {% endif %}
+                        <div class="blog-overlay"></div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="blog-meta mb-3">
+                            <span class="badge bg-light text-dark">{{ post.created_at.strftime('%B %d, %Y') }}</span>
+                            {% if post.status == 'Featured' %}
+                                <span class="badge bg-warning text-dark ms-2">Featured</span>
+                            {% endif %}
+                        </div>
+                        <h5 class="luxury-text mb-3">{{ post.title }}</h5>
+                        <p class="text-muted mb-4" style="line-height: 1.6;">{{ post.excerpt or (post.content[:120] + '...') }}</p>
+                        <a href="{{ url_for('main.blog_post', slug=post.slug) }}" 
+                           class="btn btn-outline-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{{ url_for('main.blog') }}" class="btn btn-primary btn-lg px-5 shimmer">
+                All Market Insights
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Premium CTA Section -->
+<section class="cta-premium py-5" style="background: linear-gradient(135deg, var(--deep-charcoal) 0%, var(--dark-brown) 100%); position: relative; overflow: hidden;">
+    <!-- Floating Elements Background -->
+    <div class="position-absolute w-100 h-100" style="pointer-events: none; opacity: 0.1;">
+        <div class="floating-particle" style="top: 10%; left: 5%; animation-delay: 0s; width: 6px; height: 6px;"></div>
+        <div class="floating-particle" style="top: 70%; left: 85%; animation-delay: 3s; width: 4px; height: 4px;"></div>
+        <div class="floating-particle" style="top: 30%; left: 90%; animation-delay: 1.5s; width: 8px; height: 8px;"></div>
+        <div class="floating-particle" style="top: 80%; left: 10%; animation-delay: 2.5s; width: 5px; height: 5px;"></div>
+    </div>
+    
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-4 mb-4" style="color: var(--soft-white);" data-aos="fade-up">
+                    Ready to <span class="luxury-text">Invest</span> in Your Future?
+                </h2>
+                <p class="lead mb-5" style="color: var(--soft-white); opacity: 0.9;" data-aos="fade-up" data-aos-delay="200">
+                    Discover exclusive investment opportunities in Zimbabwe's premium real estate market. 
+                    Our expert team is ready to guide you toward your next exceptional property acquisition.
+                </p>
+                <div class="d-flex flex-column flex-md-row justify-content-center gap-4" data-aos="fade-up" data-aos-delay="400">
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-primary btn-lg px-5 py-3 shimmer">
+                        <i class="fas fa-calendar-check me-2"></i>Schedule Consultation
+                    </a>
+                    <a href="{{ url_for('main.stands') }}" class="btn btn-outline-light btn-lg px-5 py-3">
+                        <i class="fas fa-search me-2"></i>Browse Properties
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- About Section -->
 <section class="py-5 bg-light">
@@ -432,6 +647,178 @@
         bottom: 0;
         background: rgba(212, 175, 55, 0.1);
         backdrop-filter: blur(2px);
+    }
+    
+    /* Feature Icon Luxury */
+    .feature-icon-luxury {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .icon-container {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-gold);
+        box-shadow: var(--shadow-soft);
+        transition: all 0.4s ease;
+    }
+    
+    .icon-container:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-gold);
+        background: var(--gold-gradient);
+        color: var(--deep-charcoal);
+    }
+    
+    /* Property Status Badge */
+    .property-status {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .property-status.available {
+        background: rgba(40, 167, 69, 0.9);
+        color: white;
+    }
+    
+    .property-status.reserved {
+        background: rgba(255, 193, 7, 0.9);
+        color: var(--deep-charcoal);
+    }
+    
+    .property-status.sold {
+        background: rgba(220, 53, 69, 0.9);
+        color: white;
+    }
+    
+    /* Property Details */
+    .detail-item {
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(212, 175, 55, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .detail-item:hover {
+        background: rgba(212, 175, 55, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .detail-label {
+        font-size: 0.8rem;
+        color: var(--warm-gray);
+        font-weight: 500;
+    }
+    
+    .detail-value {
+        font-size: 0.9rem;
+        color: var(--deep-charcoal);
+        font-weight: 600;
+    }
+    
+    /* Blog Card Styling */
+    .blog-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        position: relative;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-gold);
+    }
+    
+    .blog-image {
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .blog-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image img {
+        transform: scale(1.1);
+    }
+    
+    .blog-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .blog-card:hover .blog-overlay {
+        opacity: 1;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+        position: relative;
+        background: linear-gradient(135deg, var(--deep-charcoal) 0%, var(--dark-brown) 100%);
+        color: var(--soft-white);
+        overflow: hidden;
+    }
+    
+    .stats-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gold-gradient);
+    }
+    
+    .stats-item {
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .stats-number {
+        font-size: 4rem;
+        font-weight: 800;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stats-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--soft-white);
+        opacity: 0.9;
     }
 </style>
 {% endblock %}

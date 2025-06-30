@@ -65,9 +65,16 @@ def create_app():
         def inject_site_settings():
             from models import SiteSetting
             settings = {}
-            for setting in SiteSetting.query.all():
-                settings[setting.key] = setting.value
-            return {'site_settings': settings}
+            try:
+                for setting in SiteSetting.query.all():
+                    settings[setting.key] = setting.value
+            except:
+                pass
+            
+            def get_setting(key, default=''):
+                return settings.get(key, default)
+            
+            return {'site_settings': settings, 'get_setting': get_setting}
         
         # Seed initial data if needed
         from seed_data import seed_initial_data

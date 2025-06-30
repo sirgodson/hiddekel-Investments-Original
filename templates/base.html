@@ -302,9 +302,16 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('main.index') }}">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Hiddekel Investments" height="40" class="me-2">
-                <strong>Hiddekel Investments</strong>
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
+                {% if get_setting('site_logo') %}
+                    <img src="{{ url_for('main.uploaded_file', filename=get_setting('site_logo')) }}" 
+                         alt="{{ get_setting('site_title', 'Hiddekel Investments') }}" 
+                         style="height: 50px; margin-right: 15px; object-fit: contain;">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                         alt="Hiddekel Investments" height="40" class="me-2">
+                {% endif %}
+                <strong>{{ get_setting('site_title', 'Hiddekel Investments') }}</strong>
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

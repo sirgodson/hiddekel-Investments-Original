@@ -10,12 +10,32 @@
         <h5 class="card-title mb-0">Website Configuration</h5>
     </div>
     <div class="card-body">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
+            <!-- Logo Upload Section -->
+            <div class="mb-4">
+                <h6>Site Logo</h6>
+                {% if settings.get('site_logo') %}
+                    <div class="current-logo mb-3">
+                        <img src="{{ url_for('main.uploaded_file', filename=settings.get('site_logo')) }}" 
+                             alt="Current Logo" style="max-height: 100px;" class="img-thumbnail">
+                        <p class="text-muted mt-2">Current Logo</p>
+                    </div>
+                {% endif %}
+                <div class="mb-3">
+                    <label for="site_logo" class="form-label">Upload New Logo</label>
+                    <input type="file" class="form-control" name="site_logo" id="site_logo" 
+                           accept="image/*">
+                    <small class="form-text text-muted">Recommended size: 300x150px or similar ratio</small>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="site_name" class="form-label">Site Name</label>
-                    <input type="text" class="form-control" name="site_name" id="site_name" 
-                           value="{{ settings.get('site_name', 'Hiddekel Investments') }}">
+                    <label for="site_title" class="form-label">Site Name</label>
+                    <input type="text" class="form-control" name="site_title" id="site_title" 
+                           value="{{ settings.get('site_title', 'Hiddekel Investments') }}">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="site_tagline" class="form-label">Tagline</label>
