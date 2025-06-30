@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Hiddekel Investments - Zimbabwe Land Development{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1 class="display-4 fw-bold mb-4">Prime Land Development in Zimbabwe</h1>
+                <p class="lead mb-4">Discover exceptional residential and commercial properties with Hiddekel Investments. Your trusted partner in Zimbabwe's land development sector.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('main.stands') }}" class="btn btn-light btn-lg">View Properties</a>
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-outline-light btn-lg">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="text-center">
+                    <i class="fas fa-city display-1 mb-3"></i>
+                    <h3>Building Zimbabwe's Future</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+{% if featured_stands %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold text-primary">Featured Properties</h2>
+                <p class="lead text-muted">Discover our premium land development projects</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for stand in featured_stands %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="card h-100">
+                    {% if stand.images %}
+                        <img src="{{ url_for('main.uploaded_file', filename=stand.images[0].filename) }}" 
+                             class="card-img-top" alt="{{ stand.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-muted"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ stand.title }}</h5>
+                        <p class="card-text">{{ stand.description[:100] }}...</p>
+                        {% if stand.price %}
+                            <p class="h5 text-primary">${{ "%.2f"|format(stand.price) }}</p>
+                        {% endif %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success">{{ stand.status }}</span>
+                            <a href="{{ url_for('main.stand_detail', id=stand.id) }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.stands') }}" class="btn btn-outline-primary btn-lg">View All Properties</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4" data-aos="fade-right">
+                <h2 class="display-5 fw-bold text-primary">About Hiddekel Investments</h2>
+                <p class="lead">With years of experience in Zimbabwe's property market, we are committed to delivering exceptional land development projects that transform communities and create lasting value.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Premium location selection</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Professional development standards</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Comprehensive support services</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Flexible payment options</li>
+                </ul>
+                <a href="{{ url_for('main.about') }}" class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="text-center">
+                    <i class="fas fa-handshake display-1 text-primary mb-3"></i>
+                    <h4>Your Trusted Partner</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News -->
+{% if latest_blogs %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold text-primary">Latest News & Updates</h2>
+                <p class="lead text-muted">Stay informed about our latest developments and market insights</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for post in latest_blogs[:3] %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="card h-100">
+                    {% if post.featured_image %}
+                        <img src="{{ url_for('main.uploaded_file', filename=post.featured_image) }}" 
+                             class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.excerpt or (post.content[:150] + '...') }}</p>
+                        <small class="text-muted">{{ post.created_at.strftime('%B %d, %Y') }}</small>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="{{ url_for('main.blog_post', slug=post.slug) }}" class="btn btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.blog') }}" class="btn btn-outline-primary btn-lg">View All News</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5" data-aos="fade-up">
+                <h2 class="display-5 fw-bold text-primary">What Our Clients Say</h2>
+                <p class="lead text-muted">Hear from satisfied customers about their experience</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for testimonial in testimonials[:3] %}
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        {% if testimonial.image %}
+                            <img src="{{ url_for('main.uploaded_file', filename=testimonial.image) }}" 
+                                 class="rounded-circle mb-3" width="80" height="80" style="object-fit: cover;">
+                        {% endif %}
+                        <blockquote class="blockquote mb-3">
+                            <p>"{{ testimonial.content }}"</p>
+                        </blockquote>
+                        <footer class="blockquote-footer">
+                            <strong>{{ testimonial.name }}</strong>
+                            {% if testimonial.position %}<br><small>{{ testimonial.position }}</small>{% endif %}
+                            {% if testimonial.company %}<br><small>{{ testimonial.company }}</small>{% endif %}
+                        </footer>
+                        <div class="mt-2">
+                            {% for i in range(testimonial.rating) %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-4">Ready to Invest in Your Future?</h2>
+                <p class="lead mb-4">Contact us today to learn more about our available properties and investment opportunities.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-light btn-lg">Get in Touch</a>
+                    <a href="{{ url_for('main.stands') }}" class="btn btn-outline-light btn-lg">Browse Properties</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .min-vh-50 {
+        min-height: 50vh;
+    }
+    
+    .hero-section {
+        position: relative;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.1;
+    }
+</style>
+{% endblock %}

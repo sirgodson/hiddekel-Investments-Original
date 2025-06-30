@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery - Hiddekel Investments{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h1 class="display-4 fw-bold text-primary">Gallery</h1>
+            <p class="lead">Explore our completed projects and ongoing developments</p>
+        </div>
+    </div>
+    
+    <!-- Category Filter -->
+    {% if categories %}
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('main.gallery') }}" 
+                   class="btn {% if not request.args.get('category') %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    All
+                </a>
+                {% for category in categories %}
+                <a href="{{ url_for('main.gallery', category=category) }}" 
+                   class="btn {% if request.args.get('category') == category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    {{ category }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Gallery Grid -->
+    {% if images %}
+    <div class="row">
+        {% for image in images %}
+        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+            <div class="card">
+                <img src="{{ url_for('main.uploaded_file', filename=image.filename) }}" 
+                     class="card-img-top" alt="{{ image.caption or 'Gallery Image' }}" 
+                     style="height: 250px; object-fit: cover; cursor: pointer;"
+                     data-bs-toggle="modal" data-bs-target="#imageModal"
+                     data-bs-image="{{ url_for('main.uploaded_file', filename=image.filename) }}"
+                     data-bs-caption="{{ image.caption or '' }}">
+                {% if image.caption %}
+                <div class="card-body">
+                    <p class="card-text">{{ image.caption }}</p>
+                    {% if image.category %}
+                        <span class="badge bg-primary">{{ image.category }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-images fa-3x text-muted mb-3"></i>
+            <h3>No Images Found</h3>
+            <p class="text-muted">Gallery is being updated. Please check back soon.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Gallery Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" alt="Gallery Image">
+                <p id="modalCaption" class="mt-3"></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    imageModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const imageSrc = button.getAttribute('data-bs-image');
+        const caption = button.getAttribute('data-bs-caption');
+        
+        modalImage.src = imageSrc;
+        modalCaption.textContent = caption;
+    });
+});
+</script>
+{% endblock %}

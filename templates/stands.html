@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Properties - Hiddekel Investments{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h1 class="display-4 fw-bold text-primary">Our Properties</h1>
+            <p class="lead">Discover premium land development opportunities</p>
+        </div>
+    </div>
+    
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <form method="GET" class="row g-3">
+                <div class="col-md-3">
+                    <select name="location" class="form-select">
+                        <option value="">All Locations</option>
+                        {% for location in locations %}
+                            <option value="{{ location }}" {% if request.args.get('location') == location %}selected{% endif %}>
+                                {{ location }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="status" class="form-select">
+                        <option value="">All Status</option>
+                        <option value="Available" {% if request.args.get('status') == 'Available' %}selected{% endif %}>Available</option>
+                        <option value="Sold" {% if request.args.get('status') == 'Sold' %}selected{% endif %}>Sold</option>
+                        <option value="Reserved" {% if request.args.get('status') == 'Reserved' %}selected{% endif %}>Reserved</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" name="min_price" class="form-control" placeholder="Min Price" 
+                           value="{{ request.args.get('min_price', '') }}">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" name="max_price" class="form-control" placeholder="Max Price"
+                           value="{{ request.args.get('max_price', '') }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ url_for('main.stands') }}" class="btn btn-outline-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Properties Grid -->
+    {% if stands.items %}
+    <div class="row">
+        {% for stand in stands.items %}
+        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+            <div class="card h-100">
+                {% if stand.images %}
+                    <img src="{{ url_for('main.uploaded_file', filename=stand.images[0].filename) }}" 
+                         class="card-img-top" alt="{{ stand.title }}" style="height: 250px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ stand.title }}</h5>
+                    <p class="card-text">{{ stand.description[:150] }}{% if stand.description|length > 150 %}...{% endif %}</p>
+                    
+                    {% if stand.location %}
+                        <p class="mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i>{{ stand.location }}</p>
+                    {% endif %}
+                    
+                    {% if stand.size %}
+                        <p class="mb-1"><i class="fas fa-expand-arrows-alt text-primary me-2"></i>{{ stand.size }}</p>
+                    {% endif %}
+                    
+                    {% if stand.price %}
+                        <p class="h5 text-primary mt-2">${{ "%.2f"|format(stand.price) }}</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-{{ 'success' if stand.status == 'Available' else 'danger' if stand.status == 'Sold' else 'warning' }}">
+                            {{ stand.status }}
+                        </span>
+                        <a href="{{ url_for('main.stand_detail', id=stand.id) }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if stands.pages > 1 %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if stands.has_prev %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('main.stands', page=stands.prev_num, **request.args) }}">Previous</a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for page_num in stands.iter_pages() %}
+                        {% if page_num %}
+                            {% if page_num != stands.page %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('main.stands', page=page_num, **request.args) }}">{{ page_num }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ page_num }}</span>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if stands.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('main.stands', page=stands.next_num, **request.args) }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="row">
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h3>No Properties Found</h3>
+            <p class="text-muted">Try adjusting your search criteria</p>
+            <a href="{{ url_for('main.stands') }}" class="btn btn-primary">View All Properties</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

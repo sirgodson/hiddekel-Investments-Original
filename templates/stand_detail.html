@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}{{ stand.title }} - Hiddekel Investments{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8" data-aos="fade-right">
+            <!-- Image Gallery -->
+            {% if stand.images %}
+            <div id="propertyCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in stand.images %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ url_for('main.uploaded_file', filename=image.filename) }}" 
+                             class="d-block w-100" alt="{{ image.caption or stand.title }}" 
+                             style="height: 400px; object-fit: cover;">
+                        {% if image.caption %}
+                        <div class="carousel-caption d-none d-md-block">
+                            <p>{{ image.caption }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if stand.images|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <h1 class="display-5 fw-bold text-primary mb-3">{{ stand.title }}</h1>
+            
+            {% if stand.description %}
+            <div class="mb-4">
+                <h3>Description</h3>
+                <p class="lead">{{ stand.description }}</p>
+            </div>
+            {% endif %}
+            
+            {% if stand.map_embed %}
+            <div class="mb-4">
+                <h3>Location</h3>
+                <div class="ratio ratio-16x9">
+                    {{ stand.map_embed|safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-lg-4" data-aos="fade-left">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-body">
+                    {% if stand.price %}
+                    <h3 class="text-primary mb-3">${{ "%.2f"|format(stand.price) }}</h3>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <span class="badge bg-{{ 'success' if stand.status == 'Available' else 'danger' if stand.status == 'Sold' else 'warning' }} fs-6">
+                            {{ stand.status }}
+                        </span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="property-details">
+                        {% if stand.location %}
+                        <div class="mb-2">
+                            <strong><i class="fas fa-map-marker-alt text-primary me-2"></i>Location:</strong>
+                            <span>{{ stand.location }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if stand.size %}
+                        <div class="mb-2">
+                            <strong><i class="fas fa-expand-arrows-alt text-primary me-2"></i>Size:</strong>
+                            <span>{{ stand.size }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mb-2">
+                            <strong><i class="fas fa-calendar text-primary me-2"></i>Listed:</strong>
+                            <span>{{ stand.created_at.strftime('%B %d, %Y') }}</span>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('main.contact') }}" class="btn btn-primary btn-lg">Contact Us</a>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#inquiryModal">
+                            Make Inquiry
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Properties -->
+    {% if related_stands %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-primary mb-4">Related Properties</h3>
+        </div>
+        {% for related in related_stands %}
+        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+            <div class="card">
+                {% if related.images %}
+                    <img src="{{ url_for('main.uploaded_file', filename=related.images[0].filename) }}" 
+                         class="card-img-top" alt="{{ related.title }}" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ related.title }}</h5>
+                    <p class="card-text">{{ related.description[:100] }}...</p>
+                    {% if related.price %}
+                        <p class="text-primary fw-bold">${{ "%.2f"|format(related.price) }}</p>
+                    {% endif %}
+                    <a href="{{ url_for('main.stand_detail', id=related.id) }}" class="btn btn-outline-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Inquiry Modal -->
+<div class="modal fade" id="inquiryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Property Inquiry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('main.contact') }}" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="subject" value="Inquiry about {{ stand.title }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" name="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" name="message" rows="4" required>I'm interested in {{ stand.title }}. Please provide more information.</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
